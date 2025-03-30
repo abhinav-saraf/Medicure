@@ -17,4 +17,20 @@
     become_user : root
 
   - name: Deploy Docker Container
-    command: docker run -itd -p 8084:8082 shubhamkushwah123/medicure:1.0
+    command: docker run -itd -p 8084:8082 sarafabhinav1997/medicure:latest
+    
+  - name: Clone the Healthcare Project Repository
+      git:
+        repo: "https://github.com/sarafabhinav1997/medicure"
+        dest: "/tmp/medicure"
+        clone: yes
+        update: yes
+        force: yes
+
+    - name: Apply Kubernetes manifests
+      command: kubectl apply -f /tmp/healthcare-project/deployment.yml
+      register: k8s_output
+
+    - name: Display kubectl apply output
+      debug:
+        var: k8s_output.stdout_lines
