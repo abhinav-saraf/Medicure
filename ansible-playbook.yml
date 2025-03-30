@@ -1,20 +1,28 @@
-- name : Configure Kubernetes on EC2 Instances
-  hosts : all
+---
+- name: Configure Kubernetes on EC2 Instances
+  hosts: all
   become: true
-  connection : ssh
-  tasks : 
-  - name: Update Apt Repository
-    command: sudo apt-get update
-  - name: Install Git
-    command: sudo apt-get install git -y
-  - name: Clone Repository
-    git:
-      repo: https://github.com/sarafabhinav1997/Medicure
-      dest: /tmp/Medicure
-      version: main
-  - name: Apply Kubernetes Deployment
-    command: kubectl apply -f /tmp/Medicure/deployment.yml
-    register: kubectl_output
-  - name: Display the Output of kubectl apply
-    debug:
-      var: kubectl_output.stdout
+  tasks:
+    - name: Update Apt Repository
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        state: present
+
+    - name: Clone Repository
+      ansible.builtin.git:
+        repo: https://github.com/sarafabhinav1997/Medicure
+        dest: /tmp/Medicure
+        version: main
+
+    - name: Apply Kubernetes Deployment
+      ansible.builtin.command:
+        cmd: kubectl apply -f /tmp/Medicure/deployment.yml
+      register: kubectl_output
+
+    - name: Display the Output of kubectl apply
+      ansible.builtin.debug:
+        var: kubectl_output.stdout
