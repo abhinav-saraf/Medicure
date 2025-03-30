@@ -4,20 +4,16 @@
   connection : ssh
   tasks : 
   - name: Update Apt Repository
-      ansible.builtin.apt:
-        update_cache: yes
-        force_apt_get: yes
+    command: sudo apt update && apt upgrade -y 
   - name: Install Git
-    ansible.builtin.apt:
-      name: git
-      state: present
+    command: sudo apt install git -y
   - name: Clone Repository
     ansible.builtin.git:
       repo: https://github.com/sarafabhinav1997/Medicure
-      dest: /tmp/medicure
+      dest: /tmp/Medicure
       version: main
   - name: Apply Kubernetes manifests
-    command: kubectl apply -f /tmp/medicure/deployment.yml
+    command: kubectl apply -f /tmp/Medicure/deployment.yml
     register: k8s_output
   - name: Display kubectl apply output
     debug:
