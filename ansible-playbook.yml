@@ -14,9 +14,9 @@
 
     - name: Clone Repository
       ansible.builtin.git:
-        repo: https://github.com/sarafabhinav1997/Medicure.git
+        repo: https://github.com/sarafabhinav1997/Medicure
         dest: /tmp/Medicure
-        version: main
+        version: master
 
     - name: Apply Kubernetes Deployment
       ansible.builtin.command:
