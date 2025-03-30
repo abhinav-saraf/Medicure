@@ -3,34 +3,22 @@
   become: true
   connection : ssh
   tasks : 
-  - name: updating apt
-    command : sudo apt-get update
-
-  - name : Install Docker
-    command : sudo apt-get install -y docker.io
-    become : yes
-    become_user : root
-
-  - name : Start Docker Service
-    command : sudo systemctl start docker
-    become : yes
-    become_user : root
-
-  - name: Deploy Docker Container
-    command: docker run -itd -p 8084:8082 sarafabhinav1997/medicure:latest
-    
-  - name: Clone the Healthcare Project Repository
-      git:
-        repo: "https://github.com/sarafabhinav1997/medicure"
-        dest: "/tmp/medicure"
-        clone: yes
-        update: yes
-        force: yes
-
-    - name: Apply Kubernetes manifests
-      command: kubectl apply -f /tmp/healthcare-project/deployment.yml
-      register: k8s_output
-
-    - name: Display kubectl apply output
-      debug:
-        var: k8s_output.stdout_lines
+  - name: Update Apt Repository
+      ansible.builtin.apt:
+        update_cache: yes
+        force_apt_get: yes
+  - name: Install Git
+    ansible.builtin.apt:
+      name: git
+      state: present
+  - name: Clone Repository
+    ansible.builtin.git:
+      repo: https://github.com/sarafabhinav1997/Medicure
+      dest: /tmp/medicure
+      version: main
+  - name: Apply Kubernetes manifests
+    command: kubectl apply -f /tmp/medicure/deployment.yml
+    register: k8s_output
+  - name: Display kubectl apply output
+    debug:
+    var: k8s_output.stdout_lines
