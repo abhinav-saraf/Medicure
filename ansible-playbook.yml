@@ -8,7 +8,7 @@
   - name: Install Git
     command: sudo apt-get install git -y
   - name: Clone Repository
-    ansible.builtin.git:
+    git:
       repo: https://github.com/sarafabhinav1997/Medicure
       dest: /tmp/Medicure
       version: main
