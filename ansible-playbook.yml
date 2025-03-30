@@ -14,7 +14,7 @@
 
     - name: Clone Repository
       ansible.builtin.git:
-        repo: https://github.com/sarafabhinav1997/Medicure
+        repo: https://github.com/sarafabhinav1997/Medicure.git
         dest: /tmp/Medicure
         version: main
 
