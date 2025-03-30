@@ -18,8 +18,8 @@ pipeline {
       }
       stage('Push Dockerhub') {
         steps {
-          withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-            sh 'docker login -u sarafabhinav1997 -p ${dockerhub}'
+          withCredentials([string(credentialsId: 'dockerhub-pat', variable: 'dockerhub')]) {
+            sh 'docker login -u sarafabhinav1997 -p ${dockerhub-pat}'
           }
           sh 'docker push sarafabhinav1997/medicure:latest'
         }
