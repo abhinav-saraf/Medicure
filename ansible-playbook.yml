@@ -4,9 +4,9 @@
   connection : ssh
   tasks : 
   - name: Update Apt Repository
-    command: sudo apt update && apt upgrade -y 
+    command: sudo apt-get update
   - name: Install Git
-    command: sudo apt install git -y
+    command: sudo apt-get install git -y
   - name: Clone Repository
     ansible.builtin.git:
       repo: https://github.com/sarafabhinav1997/Medicure
