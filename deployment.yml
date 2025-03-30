@@ -20,7 +20,7 @@ spec:
           image: sarafabhinav1997/medicure:latest # Replace with your latest image name and tag
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 9099 # The port the application listens on
+            - containerPort: 8082 # The port the application listens on
 ---
 apiVersion: v1
 kind: Service
@@ -34,5 +34,5 @@ spec:
   ports:
     - protocol: TCP
       port: 9099       # Port exposed by the service
-      targetPort: 9099 # Port on the container
+      targetPort: 8082 # Port on the container
   type: NodePort       # Exposing the service outside the cluster
