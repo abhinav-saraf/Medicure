@@ -3,7 +3,7 @@ pipeline {
     stages {
       stage('Git checkout') {
         steps {
-          git 'https://github.com/abhinav-saraf/Medicure'
+          git 'https://github.com/abhinav-saraf/Medicure.git'
         }
       }
       stage('Maven Package') {
